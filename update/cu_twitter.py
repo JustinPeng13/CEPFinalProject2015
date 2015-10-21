@@ -34,7 +34,7 @@ def get_tweets( api , sinceid=None , maxid=None , count=50 ):
 	return api.home_timeline( since_id = sinceid , max_id = maxid , count = count )
 
 def post_tweet( api , text , reply=None ):
-	api.update_status( status=text , in_reply_to_status_id = reply )
+	return api.update_status( status=text , in_reply_to_status_id = reply )
 
 def delete_tweet( api , tweetid ):
 	return api.destroy_status( tweetid )

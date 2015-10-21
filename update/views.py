@@ -3,22 +3,25 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 import json
+from datetime import *
 
 from update import cu_twitter
 
 # Create your views here.
 def update( req ):
-	since = req.GET.get('since')
-	try:
-		since = int( since )
-	except Exception:
-		return HttpResponse( "{\"status\":0}" )
-	tweetlist = cu_twitter.get_tweets( cu_twitter.get_tweepy_api_wrapper( req.user.userprofile.twitter_token , req.user.userprofile.twitter_secret ) , sinceid = since , count = 999999 )
-	jsontweetlist = []
-	for i in range( len( tweetlist ) ):
-		s = tweetlist[i]
-		jsontweetlist.append( { "text": cu_twitter.status_get_text( s ) , "time": cu_twitter.status_get_time( s ) , "author": cu_twitter.status_get_poster( s ).name , "id": cu_twitter.status_get_id( s ) , "reply": cu_twitter.status_get_replyto( s ) } )
-	dt = json.dumps( {"status":1,"response":jsontweetlist} )
+	ct = datetime.now()
+	jsonupdatelist = []
+	if req.user.userprofile.twitter_token and req.user.userprofile.twitter_secret:
+		since = req.GET.get('twittersince')
+		try:
+			since = int( since )
+		except Exception:
+			return HttpResponse( "{\"status\":0}" )
+		tweetlist = cu_twitter.get_tweets( cu_twitter.get_tweepy_api_wrapper( req.user.userprofile.twitter_token , req.user.userprofile.twitter_secret ) , sinceid = since , count = 999999 )
+		for i in range( len( tweetlist ) ):
+			s = tweetlist[i]
+			jsonupdatelist.append( { "app": "twitter" , "text": cu_twitter.status_get_text( s ) , "dt": ( ct - cu_twitter.status_get_time( s ) ).total_seconds() / 60 , "author": "@" + cu_twitter.status_get_poster( s ).screen_name , "id": cu_twitter.status_get_id( s ) } )
+	dt = json.dumps( {"status":1,"response":jsonupdatelist} )
 	return HttpResponse( dt )
 
 def link_twitter( req ):
@@ -47,4 +50,6 @@ def oa_twitter( req ):
 	return redirect("/")
 
 def post_twitter( req ):
-	pass
+	if req.POST.get("text"):
+		cu_twitter.post_tweet( cu_twitter.get_tweepy_api_wrapper( req.user.userprofile.twitter_token , req.user.userprofile.twitter_secret ) , req.POST.get("text") )
+	return redirect("/")

@@ -1,14 +1,58 @@
 {% extends 'totalfeed/base.html' %}
 {%block content%}
 	<div id="status">
-		<input id="typestatus" type="text" placeholder="What's Up?" />
-		<div id="statusmenubar">
-			<div id="poststatus">
-				Post
+		<form action = "/ajax/posttwitter/" method = "POST" id = "statusform">
+			{% csrf_token %}
+			<textarea id="typestatus" type="text" placeholder="What's Up?" name = "text" autocomplete = "false"></textarea>
+			<div id="statusmenubar">
+				<div id="poststatus" role = "submit" onclick = "document.getElementById('statusform').submit()">
+					Post
+				</div>
+				<div id="picksite">
+					Twitter
+				</div>
 			</div>
-			<div id="picksite">
-				Pick a site...
+			<div id = "posts">
+				<!-- -->
 			</div>
-		</div>
+		</form>
+		<script>
+			var APP_IDENTIFIER = {
+				"twitter": "<img src = \"https://main.transportation.ucla.edu/3.jpg\"> twitter"
+			}
+			var twittersince = 1;
+			var updatefeed = function( prop ) {
+				$.ajax( "/ajax/update?twittersince="+twittersince , {
+					"dataType": "json",
+					"success": function( data , status , xhr ) {
+						if ( data.status ) {
+							for ( var i = 0 ; i < data.response.length ; i++ ) {
+								var post = document.createElement("div");
+								post.classList.add("post");
+								var pd = data.response[i];
+								if ( pd.app == "twitter" ) {
+									if ( pd.id > twittersince ) twittersince = pd.id;
+								}
+								var top = document.createElement("div");
+								top.classList.add("post-title");
+								top.innerHTML = pd.author + "<span class = \"float-right\">" + APP_IDENTIFIER[ pd.app ] + "</span>";
+								var body = document.createElement("div");
+								body.classList.add("post-body");
+								body.innerHTML = pd.text;
+								var bottom = document.createElement("div");
+								bottom.classList.add("post-bottom");
+								bottom.innerHTML = "<span class = \"float-right\">" + pd.dt + " minutes ago</span>";
+								post.appendChild( top );
+								post.appendChild( body );
+								post.appendChild( bottom );
+								document.getElementById("posts").appendChild( post );
+							}
+						}
+					}
+				} );
+				if ( prop ) setTimeout( updatefeed , 30000 , true );
+			}
+			updatefeed();
+		</script>
 	</div>
 {%endblock%}

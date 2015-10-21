@@ -70,3 +70,37 @@ body {
 	border-bottom-right-radius:15px;
 	width:80px;
 }
+
+.post {
+    border-radius: 5px;
+    margin: 15px 0;
+    border: 1px solid #aaa;
+    overflow: hidden;
+}
+
+.post-title {
+    background-color: #aaa;
+    color: #fff;
+    padding: 5px 10px 5px 10px;
+}
+.post-title img {
+    width: 15px;
+    height: 15px;
+}
+.post-body {
+    padding: 10px;
+}
+.post-bottom {
+    border-top: 1px solid #aaa;
+    padding: 5px 10px 5px 10px;
+}
+
+.float-right {
+    float:right;
+}
+.float-right:before {
+    clear:both;
+}
+.float-right:after {
+    clear:both;
+}
