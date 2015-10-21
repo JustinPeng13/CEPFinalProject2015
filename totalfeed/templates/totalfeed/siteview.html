@@ -1,0 +1,22 @@
+{% extends 'totalfeed/base.html' %}
+<link rel="stylesheet" type="text/css" href="{% static 'notes/style.css' %}" />
+{%block title%}
+	SITEVIEWSITEVIEWSITEVIEW
+{%endblock%}
+{%block content%}
+	<div class="container">
+		<h4>Title</h4> 
+		<p>ok</p>
+		<h4>Content</h4>
+		<p>ko</p>
+		<h4>Folder</h4>
+		<p>ok</p>
+		<h4>Tag(s):</h4>
+				<ul>
+				<!--https://docs.djangoproject.com/en/1.7/ref/templates/builtins/#for-->
+				{%for t in 7%}
+					<li>ok</li>
+				{%endfor%}
+				</ul>
+	</div>
+{%endblock%}

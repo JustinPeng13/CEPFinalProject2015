@@ -1,0 +1,72 @@
+body {
+    padding-top: 60px;
+}
+
+#navbar {
+    background-color: blue;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border-radius: 0;
+    border: 0;
+}
+
+#navbar #logo {
+    font-size: 30px;
+}
+
+#notif {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: red;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 30px;
+    color: white;
+    font-weight: bold;
+    margin: 10px 0 10px 0;
+}
+#status {
+	margin:auto;
+	height:150px;
+	width:800px;
+	border:1px solid gray;
+	border-radius:15px;
+}
+#typestatus {
+	border:0px;
+	margin-left:10px;
+	margin-top:5px;
+	font-size:16px;
+	height:100px;
+	width:780px;
+}
+#statusmenubar {
+	border:1px solid gray;
+	border-bottom-right-radius:15px;
+	border-bottom-left-radius:15px;
+	margin-left:-1px;
+	width:800px;
+	height:42px;
+	margin-top:2px;
+}
+#statusmenubar div {
+	font-family:Arial;
+	text-align:center;
+	float:right;
+	height:42px;
+	padding-top:10px;
+}
+#picksite {
+	background-color:gray;
+	color:black;
+	width:110px;
+}
+#poststatus {
+	background-color:blue;
+	color:white;
+	border-bottom-right-radius:15px;
+	width:80px;
+}
