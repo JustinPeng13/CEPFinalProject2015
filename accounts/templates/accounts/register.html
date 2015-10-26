@@ -21,7 +21,7 @@
                 <form action="" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 {% bootstrap_form user_form %}
-                <input type="submit" name="submit" value="Register" />
+                <a href = "#" role = "button" type="submit" name="submit" class = "btn btn-primary">{% bootstrap_icon "cloud-upload" %} Register</a>
                 </form>
                 {% endif %}
             </div>

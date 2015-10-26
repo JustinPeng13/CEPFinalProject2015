@@ -26,6 +26,7 @@
 					"dataType": "json",
 					"success": function( data , status , xhr ) {
 						if ( data.status ) {
+							var topitem = document.getElementById("posts").childNodes[0];
 							for ( var i = 0 ; i < data.response.length ; i++ ) {
 								var post = document.createElement("div");
 								post.classList.add("post");
@@ -41,11 +42,16 @@
 								body.innerHTML = pd.text;
 								var bottom = document.createElement("div");
 								bottom.classList.add("post-bottom");
-								bottom.innerHTML = "<span class = \"float-right\">" + pd.dt + " minutes ago</span>";
+								var time = Math.round( pd.dt |0 )
+								bottom.innerHTML = "<span class = \"float-right\">" + time + " minute" + (time == 1 ? "" : "s") + " ago</span>";
 								post.appendChild( top );
 								post.appendChild( body );
 								post.appendChild( bottom );
-								document.getElementById("posts").appendChild( post );
+								if ( topitem ) {
+									document.getElementById("posts").insertBefore( post , topitem );
+								} else {
+									document.getElementById("posts").appendChild( post );
+								}
 							}
 						}
 					}
